@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/suppiden/OpenWebinars-go/internal"
 	"github.com/suppiden/OpenWebinars-go/internal/models"
 )
 
@@ -32,24 +31,40 @@ func renderTemplate(w http.ResponseWriter, tmplFile string, data interface{} ){
 
 func homeHandler(w http.ResponseWriter, r *http.Request){
 	data := models.PAgeData{
-		Title: "OpenWebinars / Jony",
+		Title: "OpenWebinars",
+		Author: "Jonathan",
+		Welcome: "Mira lo que acabo de hacer",
 		
-		Message: template.HTML("La plataforma donde encontraras el curso <b>De Go hecha por mi<b>"),
 
 	}
 
-	tmplFile := filepath.Join("web/templates/", "index.html")
+	page :=r.URL.Path[1:]
+	if page == ""{
+		page = "index.html"
+	}
+
+
+	tmplFile := "web/templates/" + page
+
+	if _,err := os.Stat(tmplFile); err !=nil{
+		tmplFile = "web/templates/error.html"
+
+		data.ErrorCode = http.StatusNotFound
+		data.ErrorMessage = "Pagina no encontrada"
+	}
+
 	renderTemplate(w, tmplFile, data)
+
+
 }
 
 
 func errorHandler(w http.ResponseWriter, r *http.Request){
-	data := PageData{
-		Title: "error 404",
-		ErrorMessage: "¡Pagina no encontrada!",
-		ErrorCode: 404,
+	data := models.PAgeData{
+		Title: "Pagina no encontrada",
+		ErrorMessage: "¡Error interno del servidos!",
+		ErrorCode: http.StatusInternalServerError,
 	}
 
-	tmplFile := filepath.Join("web/templates/", "error.html")
-	renderTemplate(w, tmplFile, data)
+	renderTemplate(w, "web/templates/error.html", data)
 }

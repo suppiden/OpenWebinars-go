@@ -59,7 +59,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request){
 }
 
 
-func errorHandler(w http.ResponseWriter, r *http.Request){
+func ErrorHandler(w http.ResponseWriter, r *http.Request){
 	data := models.PAgeData{
 		Title: "Pagina no encontrada",
 		ErrorMessage: "¡Error interno del servidos!",

@@ -6,8 +6,8 @@ import(
 )
 
 func RegisterRoutes(){
-	http.HandleFunc("/", handlers)
-	http.HandleFunc("/error", handlers.homeHandler)
+	http.HandleFunc("/", handlers.HomeHandler)
+	http.HandleFunc("/error", handlers.errorHandler)
 
 }
 

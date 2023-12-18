@@ -29,7 +29,7 @@ func renderTemplate(w http.ResponseWriter, tmplFile string, data interface{} ){
 
 }
 
-func homeHandler(w http.ResponseWriter, r *http.Request){
+func HomeHandler(w http.ResponseWriter, r *http.Request){
 	data := models.PAgeData{
 		Title: "OpenWebinars",
 		Author: "Jonathan",

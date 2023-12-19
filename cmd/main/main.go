@@ -3,6 +3,7 @@ import(
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/suppiden/OpenWebinars-go/internal/config"
 	"github.com/suppiden/OpenWebinars-go/internal/routes"
@@ -10,6 +11,18 @@ import(
 )
 
 func main(){
+	logFile, err := os.OpenFile("eror.log", os.O_RDWR|os.O_CREATE| os.O_APPEND, 0666)
+
+	if err !=nil{
+		fmt.Println("Error al abrir el archivo de registro: ", err)
+		return
+	}
+
+	defer logFile.Close()
+	log.SetOutput(logFile)
+
+
+
 	cfg := config.LoadConfig()
 
 	routes.RegisterRoutes()

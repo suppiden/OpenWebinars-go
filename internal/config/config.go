@@ -20,7 +20,7 @@ func LoadConfig() *Config{
 	err := viper.ReadInConfig()
 
 	if err != nil {
-		log.Fatal("no se pudo leer el archivo %s", err)
+		log.Fatalf("no se pudo leer el archivo %s", err)
 	}
 
 	cfg := &Config {
